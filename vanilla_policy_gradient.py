@@ -17,7 +17,7 @@ class VanillaPG():
                  lamb = 0.9,
                  learning_rate_policymodel = 0.01,
                  learning_rate_valuemodel = 0.01,
-                 load_agent_file = None):
+                 pretrained = False):
         """
         Initfunction
         """
@@ -30,8 +30,8 @@ class VanillaPG():
         self.precision = 'float64'
 
         ### intervene if loading from file.
-        if load_agent_file is not None:
-            with open(load_agent_file, 'rb') as f:
+        if pretrained:
+            with open('agent_data.pickle', 'rb') as f:
                 agent_data = pickle.load(f)
             
             hidden_policy = agent_data['hidden_policy']
@@ -51,7 +51,7 @@ class VanillaPG():
             optimizer = tf.keras.optimizers.Adam(learning_rate = learning_rate_valuemodel),
             loss      = tf.keras.losses.MeanSquaredError())
 
-        if load_agent_file is not None:
+        if pretrained:
             self.policymodel.set_weights(weights_policy)
             self.valuemodel.set_weights(weights_value)
 
