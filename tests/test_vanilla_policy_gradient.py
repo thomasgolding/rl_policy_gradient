@@ -1,5 +1,5 @@
 import pytest
-import vanilla_policy_gradient as vpg
+from policygradient import vanilla as vpg
 import numpy as np
 import gym
 

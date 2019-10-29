@@ -1,0 +1,8 @@
+from setuptools import setup, find_packages
+
+setup(
+    name = 'policygradient',
+    version = 0.1,
+    packages = find_packages(),
+    install_requires = ['pip >= 19.3.1', 'numpy', 'tensorflow==2.0.0', 'gym', 'falcon']
+)

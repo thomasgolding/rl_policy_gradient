@@ -1,4 +1,4 @@
-import vanilla_policy_gradient as vpg
+import vanilla as vpg
 import gym 
 
 agent = vpg.VanillaPG(state_dim = 4, n_action = 2, pretrained=True)
