@@ -2,7 +2,7 @@ import pickle
 import numpy as np 
 import tensorflow as tf 
 import gym
-import sys
+from pathlib import Path
 
 class VanillaPG():
     """
@@ -31,13 +31,18 @@ class VanillaPG():
 
         ### intervene if loading from file.
         if pretrained:
-            with open('agent_data.pickle', 'rb') as f:
+            filepath = Path(__file__).parent / 'agent_data.pickle'
+            if filepath.exists() and not filepath.is_file():
+                return
+            with open(filepath, 'rb') as f:
                 agent_data = pickle.load(f)
             
             hidden_policy = agent_data['hidden_policy']
             hidden_value = agent_data['hidden_value']
             weights_policy = agent_data['policy_weights']
             weights_value = agent_data['value_weights']
+
+            print("Pretrained model loaded.")
 
         ## policy
         self.neurons_policy = [self.state_dim] + hidden_policy + [self.n_action]
