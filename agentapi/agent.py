@@ -19,20 +19,22 @@ class Agent():
         resp.status = falcon.HTTP_200
 
     def on_post(self, req, resp):
-        dd = json.load(req.stream)
+        dd = req.stream.read(req.content_length)
+        dd = json.loads(dd)
         state = np.array(dd['state'])
         iaction = self.agent.decide_action(state) 
         action = {'action': [int(iaction)]}
         resp.body = json.dumps(action)
-        print('-----------CONTENT_TYPE-------------')
-        print(req.headers)
+        # print('-----------CONTENT_TYPE-------------')
+        # print(req.headers)
         # print('-----------HEADERS-------------')
         # print(req.headers)
         # print('-----------PARAMS-------------')
         # print(req.content_length)
         # print('-----------STREAM-------------')
-        # dd = json.load(req.stream)
-        # print(dd)
+        #print(type(req.stream.read()))
+        #dd = json.load(req.stream)
+        #print(dd)
 
 
         
