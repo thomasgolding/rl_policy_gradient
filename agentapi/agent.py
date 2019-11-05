@@ -10,13 +10,11 @@ class Agent():
         self.agent = policygradient.VanillaPG(state_dim = 4, n_action = 2, pretrained = True)
     
     def on_get(self, req, resp):
-        state = [float(el) for el in req.params['state']]
-        state = np.array(state)
-        print(state)
+        state = np.array([0.1,0.1,0.1,0.1])
         iaction = self.agent.decide_action(state) 
         action = {'action': [int(iaction)]}
         resp.body = json.dumps(action)
-        resp.status = falcon.HTTP_200
+        resp.status = falcon.HTTP_200 if int(iaction) in [0,1] else falcon.HTTP_404
 
     def on_post(self, req, resp):
         dd = req.stream.read(req.content_length)
@@ -25,6 +23,8 @@ class Agent():
         iaction = self.agent.decide_action(state) 
         action = {'action': [int(iaction)]}
         resp.body = json.dumps(action)
+
+
         # print('-----------CONTENT_TYPE-------------')
         # print(req.headers)
         # print('-----------HEADERS-------------')
