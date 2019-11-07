@@ -10,6 +10,7 @@ def run_cartpole_on_agentapi():
     while not done:
         d = json.dumps({'state': s.tolist()})
         resp = requests.post('http://127.0.0.1:5000/agent', data=d)
+        #resp = requests.post('http://3.133.106.169:80/agent', data=d)
         a = resp.json()['action'][0]
         [s2, r, done, _] = env.step(a)
         s = s2.copy()

@@ -1,0 +1,40 @@
+FROM ubuntu:18.04
+
+WORKDIR /opt/program
+
+RUN apt-get -y update
+RUN apt-get install -y python3
+RUN apt-get install -y python3-pip
+RUN apt-get install -y nginx
+
+## update pip to get tensorflow 2.0.0
+RUN pip3 install --upgrade pip
+
+## make python = python3 alias
+RUN echo -e '#!/bin/bash\npython3' > /usr/bin/python && \
+    chmod +x /usr/bin/python
+
+
+## copy sourcecode
+ADD policygradient policygradient
+ADD agentapi agentapi
+ADD config config
+ADD setup.py setup.py
+ADD serve.py serve.py
+
+## install package and gunicorn
+RUN pip install .
+RUN pip install gunicorn
+RUN pip install gevent
+
+
+ENV PYTHONUNBUFFERED=TRUE
+ENV PYTHONDONTWRITEBYTECODE=TRUE
+ENV PATH="/opt/program:${PATH}"
+
+
+
+
+## expose port
+#EXPOSE 8080
+
