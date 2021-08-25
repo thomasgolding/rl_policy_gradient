@@ -4,6 +4,6 @@ setup(
     name = 'policygradient',
     version = 0.1,
     packages = find_packages(),
-    install_requires = ['pip >= 19.3.1', 'numpy', 'tensorflow==2.0.0', 'gym', 'falcon'],
+    install_requires = ['pip >= 19.3.1', 'numpy', 'tensorflow==2.5.1', 'gym', 'falcon'],
     include_package_data = True
 )
